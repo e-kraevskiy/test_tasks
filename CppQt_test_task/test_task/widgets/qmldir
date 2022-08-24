@@ -1,0 +1,5 @@
+module widgets
+SettingsPopup 1.0 SettingsPopup.qml
+MouseHandlerWidget 1.0 MouseHandlerWidget.qml
+ButtonWidget 1.0 ButtonWidget.qml
+NotifyPopup 1.0 NotifyPopup.qml
