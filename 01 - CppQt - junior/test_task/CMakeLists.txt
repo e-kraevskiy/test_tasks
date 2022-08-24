@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(test_task LANGUAGES CXX)
+project(mouse_analyzer LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -36,8 +36,6 @@ find_package(Qt5 COMPONENTS REQUIRED
   Sql
   Widgets
   )
-
-FIND_PACKAGE(OpenCV REQUIRED)
 
 # Сюда добавляем .h-ки из директории include
 set(PROJECT_HEADERS
@@ -82,7 +80,7 @@ add_executable(${PROJECT_NAME}
   )
 
 
-target_compile_definitions(test_task
+target_compile_definitions(mouse_analyzer
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(${PROJECT_NAME}
   Qt5::Core

@@ -37,8 +37,6 @@ find_package(Qt5 COMPONENTS REQUIRED
   Widgets
   )
 
-FIND_PACKAGE(OpenCV REQUIRED)
-
 # Сюда добавляем .h-ки из директории include
 set(PROJECT_HEADERS
   )
