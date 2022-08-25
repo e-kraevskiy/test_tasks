@@ -3,27 +3,35 @@
 
 #include "circular_buffer_array.h"
 #include "circular_buffer_list.h"
+#include "timsort.h"
 
 using namespace std;
 
 int main() {
   // CircularBuffer test
-  //  CircularBufferArray<int, 5> buf;
-  CircularBufferList<int, 5> buf;
-  buf.write(1);
-  buf.write(2);
-  buf.write(3);
-  buf.write(4);
-  buf.write(5);
-  buf.write(6);
-  std::optional<int> got = buf.get();
+  CircularBufferArray<float, 5> buf;
+  //  CircularBufferList<float, 5> buf;
+  buf.write(1.0);
+  buf.write(2.0);
+  cout << "size = " << buf.size() << endl;
+  buf.write(3.4);
+  buf.write(4.4);
+  buf.write(5.4);
+  buf.write(6.4);
+  buf.write(3.4);
+  buf.write(4.4);
+  buf.write(5.4);
+  buf.write(6.4);
+  buf.write(3.4);
+  buf.write(4.4);
+  buf.write(5.4);
+  buf.write(6.4);
+  std::optional<float> got = buf.get();
   if (got) cout << "5add got = " << *got << endl;
   got = buf.get();
   if (got) cout << "6add got = " << *got << endl;
-  //  buf.write(7);
-  //  buf.write(8);
   while (!buf.empty()) {
-    std::optional<int> tmp = buf.read();
+    std::optional<float> tmp = buf.read();
     if (tmp) {
       cout << *tmp << endl;
     }
@@ -31,11 +39,11 @@ int main() {
   got = buf.get();
   if (got) cout << "got = " << *got << endl;
 
-  buf.write(4);
+  buf.write(4.2);
   cout << "bufer write 4" << endl;
   cout << "bufer capacity = " << buf.capacity() << endl;
   cout << "bufer size = " << buf.size() << endl;
-  optional<int> tmp = buf.read();
+  optional<float> tmp = buf.read();
   if (tmp) cout << endl << *tmp << endl;
   if (buf.empty()) {
     cout << "bufer empty" << endl;
@@ -43,24 +51,14 @@ int main() {
   cout << "bufer size = " << buf.size() << endl;
   cout << "bufer capacity = " << buf.capacity() << endl;
   // ~CircularBuffer test
-  cout << "~CircularBuffer test" << endl;
+  cout << "~CircularBufferList test" << endl;
 
-  //  int a[5] = {1, 1, 1, 1, 1};
+  int a[15] = {4, 3, 4, 1, 5, 76, 12, 43, 43, 34, 45, 12, 43, 43, 23};
+  timSort(a, 15);
 
-  //  cout << a[0] - a[4] << endl;
-  //  cout << a - (a + 4) << endl;
-
-  //  std::forward_list<int> l;
-  //  l.insert_after(l.begin(), 1);
-  //  l.insert_after(l.begin(), 2);
-  //  l.insert_after(l.begin(), 3);
-  //  l.insert_after(l.begin(), 4);
-  //  l.insert_after(l.begin(), 5);
-
-  //  auto it = l.begin();
-  //  ++it;
-  //  cout << "IT=" << *it << endl;
-  //  int b = *it;
+  for (int i : a) {
+    cout << i << " ";
+  }
 
   return 0;
 }

@@ -9,4 +9,5 @@ add_executable(test_task
   main.cpp
   circular_buffer_array.h
   circular_buffer_list.h
+  timsort.h
   )

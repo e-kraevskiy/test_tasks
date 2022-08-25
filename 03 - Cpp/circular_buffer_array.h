@@ -1,9 +1,6 @@
 #ifndef CIRCULAR_BUFFER_ARRAY_H
 #define CIRCULAR_BUFFER_ARRAY_H
 
-#include <array>
-#include <cstdint>
-#include <iostream>
 #include <optional>
 
 template <class T, size_t max_size>
@@ -71,7 +68,6 @@ size_t CircularBufferArray<T, max_size>::size() const noexcept {
       size = max_size + tail_ - head_;
     }
   }
-
   return size;
 }
 
