@@ -2,6 +2,8 @@
 #include <iostream>
 
 #include "first_task.h"
+#include "list.h"
+#include "list_debug.h"
 #include "secont_task.h"
 
 using namespace std;
@@ -20,14 +22,17 @@ int main() {
   //  cout << "16=\t" << intToBinStr(16) << endl;
   //  cout << "32=\t" << intToBinStr(32) << endl;
 
-  char data[] = "AAA BBB CCC";
-  cout << data << "=";
-  RemoveDups(data);
-  cout << data << endl;
-  char test[] = "AAA asdasdasdasdasdadsssa BBB CCC";
-  cout << test << "=";
-  RemoveDups(test);
-  cout << test << endl;
+  //  char data[] = "AAA BBB CCC";
+  //  cout << data << "=";
+  //  RemoveDups(data);
+  //  cout << data << endl;
+  //  char test[] = "AAA asdasdasdasdasdadsssa BBB CCC";
+  //  cout << test << "=";
+  //  RemoveDups(test);
+  //  cout << test << endl;
+
+  ListNode* test = getTestList();
+  printList(test);
 
   return 0;
 }
