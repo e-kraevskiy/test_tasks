@@ -1,6 +1,6 @@
 #include "list.h"
 
-void List::Serialize(FILE* file) {
+void List::serialize(FILE* file) {
   fwrite(&count_, sizeof(count_), 1, file);
 
   int index = 0;
@@ -9,7 +9,7 @@ void List::Serialize(FILE* file) {
   for (ListNode* cur = head_; cur != nullptr; cur = cur->next) {
     int data_size = cur->data.size();
     fwrite(&data_size, sizeof(int), 1, file);
-    fwrite(&cur->data, sizeof(char), data_size, file);
+    fwrite(cur->data.c_str(), sizeof(char), data_size, file);
     cur->prev = new ListNode(std::to_string(index));
 
     ++index;
@@ -26,29 +26,31 @@ void List::Serialize(FILE* file) {
     fwrite(&rand_index, sizeof(int), 1, file);
   }
   // Восстанавливаем указатели на prev
-  if (head_ != nullptr) {
+  if (head_ != nullptr and head_->prev != nullptr) {
     delete head_->prev;
     head_->prev = nullptr;
   }
   for (ListNode* cur = head_; cur != nullptr; cur = cur->next) {
-    if (cur->next != nullptr) {
+    if (cur->next != nullptr and cur->next->prev != nullptr) {
       delete cur->next->prev;
       cur->next->prev = cur;
     }
   }
 }
 
-void List::Deserialize(FILE* file) {
+void List::deserialize(FILE* file) {
+  clearList();
   fread(&count_, sizeof(count_), 1, file);
-  std::vector<ListNode*> ptr_vec(count_);
-  ListNode* cur = nullptr;
+  std::vector<ListNode*> ptr_vec;
+  ptr_vec.reserve(count_);
 
   // Заполняем next и prev
   for (int i = 0; i < count_; ++i) {
     int data_size = 0;
     fread(&data_size, sizeof(int), 1, file);
     std::string tmp;
-    fread(&tmp, sizeof(char), data_size, file);
+    tmp.resize(data_size);
+    fread(tmp.data(), sizeof(char), data_size, file);
 
     // Добавляем новый узел
     if (i != 0) {
@@ -64,6 +66,41 @@ void List::Deserialize(FILE* file) {
   for (ListNode* cur = head_; cur != nullptr; cur = cur->next) {
     int index = 0;
     fread(&index, sizeof(int), 1, file);
-    cur->rand = ptr_vec.at(index);
+    if (index != -1)
+      cur->rand = ptr_vec.at(index);
+    else
+      cur->rand = nullptr;
   }
+}
+
+void List::printList() {
+  for (ListNode* cur = head_; cur != nullptr; cur = cur->next) {
+    std::cout << "cur=" << cur->data;
+    std::string tmp;
+    if (cur->prev)
+      tmp = cur->prev->data;
+    else
+      tmp = "null";
+
+    std::cout << "\tprev=" << tmp;
+    if (cur->rand)
+      tmp = cur->rand->data;
+    else
+      tmp = "null";
+    std::cout << "\trand=" << tmp << std::endl;
+  }
+}
+
+void List::clearList() {
+  ListNode* cur = head_;
+  ListNode* tmp = nullptr;
+
+  while (cur != nullptr) {
+    tmp = cur->next;
+    delete cur;
+    cur = tmp;
+  }
+  head_ = nullptr;
+  tail_ = nullptr;
+  count_ = 0;
 }

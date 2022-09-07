@@ -30,16 +30,21 @@ int main() {
   //  cout << test << "=";
   //  RemoveDups(test);
   //  cout << test << endl;
+  FILE* file;
 
   List test = getTestList();
-  printList(test);
-  FILE* file = fopen("debug.dat", "wb");
-  test.Serialize(file);
+  test.printList();
+  file = fopen("debug.dat", "wb");
+  test.serialize(file);
   fclose(file);
+  cout << "-----------" << endl;
+  test.printList();
+  cout << "-----------" << endl;
 
   file = fopen("debug.dat", "rb");
-  test.Deserialize(file);
+  test.deserialize(file);
   fclose(file);
+  test.printList();
 
   return 0;
 }
