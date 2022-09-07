@@ -5,17 +5,15 @@
 #include <vector>
 
 struct ListNode {
-  ListNode() : next(nullptr), prev(nullptr), rand(nullptr) {}
+  ListNode() : next_(nullptr), prev_(nullptr), rand_(nullptr) {}
   ListNode(std::string str)
-      : data(str), next(nullptr), prev(nullptr), rand(nullptr) {}
+      : data(str), next_(nullptr), prev_(nullptr), rand_(nullptr) {}
   ListNode(std::string str, ListNode* prev)
-      : data(str), prev(prev), next(nullptr), rand(nullptr) {}
-  ListNode(std::string str, ListNode* prev, ListNode* next)
-      : data(str), prev(prev), next(next), rand(nullptr) {}
-  ListNode* prev;
-  ListNode* next;
+      : data(str), prev_(prev), next_(nullptr), rand_(nullptr) {}
+  ListNode* prev_;
+  ListNode* next_;
   ListNode*
-      rand;  // указатель на произвольный элемент данного списка, либо NULL
+      rand_;  // указатель на произвольный элемент данного списка, либо NULL
   std::string data;
 };
 
@@ -31,9 +29,8 @@ class List {
   void printList();
   void clear();
 
-  ListNode* head_;
-
  private:
+  ListNode* head_;
   ListNode* tail_;
   int count_;
 };

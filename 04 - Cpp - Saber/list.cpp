@@ -5,35 +5,35 @@ void List::serialize(FILE* file) {
 
   int index = 0;
   // Записываем длинну data + data
-  for (ListNode* cur = head_; cur != nullptr; cur = cur->next) {
+  for (ListNode* cur = head_; cur != nullptr; cur = cur->next_) {
     int data_size = cur->data.size();
     fwrite(&data_size, sizeof(int), 1, file);
     fwrite(cur->data.c_str(), sizeof(char), data_size, file);
-    // Меняем prev на узел с индексом текущего узла в data
-    cur->prev = new ListNode(std::to_string(index));
+    // Меняем prev_ на узел с индексом текущего узла в data
+    cur->prev_ = new ListNode(std::to_string(index));
     ++index;
   }
-  // Записываем индекс rand узла
-  for (ListNode* cur = head_; cur != nullptr; cur = cur->next) {
-    int rand_index = 0;
-    // Если rand == nullptr -> записываем -1;
-    if (cur->rand != nullptr) {
-      rand_index = atoi(cur->rand->prev->data.c_str());
+  // Записываем индекс rand_ узла
+  for (ListNode* cur = head_; cur != nullptr; cur = cur->next_) {
+    int rand__index = 0;
+    // Если rand_ == nullptr -> записываем -1;
+    if (cur->rand_ != nullptr) {
+      rand__index = atoi(cur->rand_->prev_->data.c_str());
     } else {
-      rand_index = -1;
+      rand__index = -1;
     }
-    fwrite(&rand_index, sizeof(int), 1, file);
+    fwrite(&rand__index, sizeof(int), 1, file);
   }
-  // Восстанавливаем prev у головы
+  // Восстанавливаем prev_ у головы
   if (head_ != nullptr) {
-    delete head_->prev;
-    head_->prev = nullptr;
+    delete head_->prev_;
+    head_->prev_ = nullptr;
   }
-  // Восстанавливаем prev у всех остальных
-  for (ListNode* cur = head_; cur != nullptr; cur = cur->next) {
-    if (cur->next != nullptr) {
-      delete cur->next->prev;
-      cur->next->prev = cur;
+  // Восстанавливаем prev_ у всех остальных
+  for (ListNode* cur = head_; cur != nullptr; cur = cur->next_) {
+    if (cur->next_ != nullptr) {
+      delete cur->next_->prev_;
+      cur->next_->prev_ = cur;
     }
   }
 }
@@ -44,7 +44,7 @@ void List::deserialize(FILE* file) {
   std::vector<ListNode*> ptr_vec;
   ptr_vec.reserve(count_);
 
-  // Заполняем next и prev
+  // Заполняем next_ и prev_
   for (int i = 0; i < count_; ++i) {
     int data_size = 0;
     fread(&data_size, sizeof(int), 1, file);
@@ -54,37 +54,37 @@ void List::deserialize(FILE* file) {
 
     // Добавляем новый узел
     if (i != 0) {
-      tail_->next = new ListNode(tmp, tail_);
-      tail_ = tail_->next;
+      tail_->next_ = new ListNode(tmp, tail_);
+      tail_ = tail_->next_;
     } else {
       head_ = new ListNode(tmp);
       tail_ = head_;
     }
     ptr_vec.push_back(tail_);
   }
-  // Заполняем rand
-  for (ListNode* cur = head_; cur != nullptr; cur = cur->next) {
+  // Заполняем rand_
+  for (ListNode* cur = head_; cur != nullptr; cur = cur->next_) {
     int index = 0;
     fread(&index, sizeof(int), 1, file);
     if (index != -1)
-      cur->rand = ptr_vec.at(index);
+      cur->rand_ = ptr_vec.at(index);
     else
-      cur->rand = nullptr;
+      cur->rand_ = nullptr;
   }
 }
 
 void List::printList() {
-  for (ListNode* cur = head_; cur != nullptr; cur = cur->next) {
+  for (ListNode* cur = head_; cur != nullptr; cur = cur->next_) {
     std::cout << "cur=" << cur->data;
     std::string tmp;
-    if (cur->prev)
-      tmp = cur->prev->data;
+    if (cur->prev_)
+      tmp = cur->prev_->data;
     else
       tmp = "null";
 
     std::cout << "\tprev=" << tmp;
-    if (cur->rand)
-      tmp = cur->rand->data;
+    if (cur->rand_)
+      tmp = cur->rand_->data;
     else
       tmp = "null";
     std::cout << "\trand=" << tmp << std::endl;
@@ -96,7 +96,7 @@ void List::clear() {
   ListNode* tmp = nullptr;
 
   while (cur != nullptr) {
-    tmp = cur->next;
+    tmp = cur->next_;
     delete cur;
     cur = tmp;
   }
