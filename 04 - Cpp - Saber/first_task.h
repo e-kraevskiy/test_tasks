@@ -15,7 +15,6 @@ void printIntBinary(T num) {
     std::cout << '1';
   else
     std::cout << '0';
-
   while (mask) {
     if (num & mask)
       std::cout << '1';
