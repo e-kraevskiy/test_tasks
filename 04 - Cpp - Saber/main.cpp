@@ -31,8 +31,15 @@ int main() {
   //  RemoveDups(test);
   //  cout << test << endl;
 
-  ListNode* test = getTestList();
+  List test = getTestList();
   printList(test);
+  FILE* file = fopen("debug.dat", "wb");
+  test.Serialize(file);
+  fclose(file);
+
+  file = fopen("debug.dat", "rb");
+  test.Deserialize(file);
+  fclose(file);
 
   return 0;
 }

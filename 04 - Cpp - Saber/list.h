@@ -2,6 +2,7 @@
 #define LIST_H
 
 #include <iostream>
+#include <vector>
 
 struct ListNode {
   ListNode() : next(nullptr), prev(nullptr), rand(nullptr) {}
@@ -20,15 +21,19 @@ struct ListNode {
 
 class List {
  public:
+  List() : head_(nullptr), tail_(nullptr), count_(0) {}
+  List(ListNode* head, ListNode* tail, int count)
+      : head_(head), tail_(tail), count_(count) {}
   // сохранение в файл (файл открыт с помощью fopen(path, "wb"))
   void Serialize(FILE* file);
   // загрузка из файла (файл открыт спомощью fopen(path, "rb"))
   void Deserialize(FILE* file);
 
+  ListNode* head_;
+
  private:
-  ListNode* head;
-  ListNode* tail;
-  int count;
+  ListNode* tail_;
+  int count_;
 };
 
 #endif  // LIST_H

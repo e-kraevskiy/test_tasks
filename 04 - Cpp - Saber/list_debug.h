@@ -3,7 +3,7 @@
 
 #include "list.h"
 
-ListNode* getTestList() {
+List getTestList() {
   ListNode* n1 = new ListNode("0");
 
   n1->next = new ListNode("1", n1);
@@ -24,10 +24,11 @@ ListNode* getTestList() {
   n4->rand = n2;
   n5->rand = n3;
 
-  return n1;
+  return List(n1, n5, 5);
 }
 
-void printList(ListNode* head) {
+void printList(List list) {
+  ListNode* head = list.head_;
   while (head) {
     std::cout << "cur=" << head->data << "\trand=" << head->rand->data
               << std::endl;
