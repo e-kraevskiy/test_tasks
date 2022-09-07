@@ -1,4 +1,82 @@
-#include "list.h"
+ФИО - Краевский Евгений Игоревич
+Дата выполнения - 07.09.2022
+Время выполенения - 8-9 часов
+
+//----------------------------------------------------- 
+//                     1 Task
+//-----------------------------------------------------
+
+template <typename T>
+void printIntBinary(T num) {
+  int shifts_count = sizeof(T) * 8 - 2;
+  T mask = static_cast<T>(1);
+  mask <<= shifts_count;
+  // Знаковый бит
+  if (num < 0)
+    std::cout << '1';
+  else
+    std::cout << '0';
+  while (mask) {
+    if (num & mask)
+      std::cout << '1';
+    else
+      std::cout << '0';
+    mask >>= 1;
+  }
+  std::cout << std::endl;
+}
+
+//----------------------------------------------------- 
+//                     2 Task
+//-----------------------------------------------------
+
+void RemoveDups(char* str) {
+  char* cur = str;
+  char* last_unique = str;
+  while (*cur != '\0') {
+    if (*cur != *last_unique) *(++last_unique) = *cur;
+    ++cur;
+  }
+  *(++last_unique) = '\0';
+}
+
+
+//----------------------------------------------------- 
+//                     3 Task
+//-----------------------------------------------------
+
+
+struct ListNode {
+  ListNode() : next_(nullptr), prev_(nullptr), rand_(nullptr) {}
+  ListNode(std::string str)
+      : data(str), next_(nullptr), prev_(nullptr), rand_(nullptr) {}
+  ListNode(std::string str, ListNode* prev)
+      : data(str), prev_(prev), next_(nullptr), rand_(nullptr) {}
+  ListNode* prev_;
+  ListNode* next_;
+  ListNode*
+      rand_;  // указатель на произвольный элемент данного списка, либо NULL
+  std::string data;
+};
+
+class List {
+ public:
+  List() : head_(nullptr), tail_(nullptr), count_(0) {}
+  List(ListNode* head, ListNode* tail, int count)
+      : head_(head), tail_(tail), count_(count) {}
+  ~List() { clear(); };
+  void serialize(FILE* file);
+  void deserialize(FILE* file);
+
+  void printList();
+  void clear();
+
+ private:
+  ListNode* head_;
+  ListNode* tail_;
+  int count_;
+};
+
 
 void List::serialize(FILE* file) {
   fwrite(&count_, sizeof(count_), 1, file);
