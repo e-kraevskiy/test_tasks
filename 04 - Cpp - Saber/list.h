@@ -24,14 +24,12 @@ class List {
   List() : head_(nullptr), tail_(nullptr), count_(0) {}
   List(ListNode* head, ListNode* tail, int count)
       : head_(head), tail_(tail), count_(count) {}
-  ~List() { clearList(); };
-  // сохранение в файл (файл открыт с помощью fopen(path, "wb"))
+  ~List() { clear(); };
   void serialize(FILE* file);
-  // загрузка из файла (файл открыт спомощью fopen(path, "rb"))
   void deserialize(FILE* file);
 
   void printList();
-  void clearList();
+  void clear();
 
   ListNode* head_;
 

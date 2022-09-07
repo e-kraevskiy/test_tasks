@@ -9,42 +9,67 @@
 using namespace std;
 
 int main() {
-  //  cout << "1=\t" << intToBinStr(1) << endl;
-  //  cout << "-2147483647=\t" << intToBinStr(-2147483647) << endl;
-  //  cout << "-2147483648=\t" << intToBinStr(-2147483648) << endl;
-  //  cout << "2147483647=\t" << intToBinStr(2147483647) << endl;
-  //  cout << "-1=\t" << intToBinStr(-1) << endl;
-  //  cout << "2=\t" << intToBinStr(2) << endl;
-  //  cout << "3=\t" << intToBinStr(3) << endl;
-  //  cout << "4=\t" << intToBinStr(4) << endl;
-  //  cout << "5=\t" << intToBinStr(5) << endl;
-  //  cout << "8=\t" << intToBinStr(8) << endl;
-  //  cout << "16=\t" << intToBinStr(16) << endl;
-  //  cout << "32=\t" << intToBinStr(32) << endl;
+  cout << "1=\t";
+  printIntBinary(1);
+  cout << "2147483647= \t";
+  printIntBinary(2147483647);
+  cout << INT_MAX << "=INT_MAX=\t";
+  printIntBinary(INT_MAX);
+  cout << "-2147483648= \t";
+  printIntBinary(-2147483648);
+  cout << INT_MIN << "=INT_MIN=\t";
+  printIntBinary(INT_MIN);
+  cout << "2147483647=\t";
+  printIntBinary(2147483647);
+  cout << "-1=\t";
+  printIntBinary(-1);
+  cout << "2=\t";
+  printIntBinary(2);
+  cout << "3=\t";
+  printIntBinary(3);
+  cout << "4=\t";
+  printIntBinary(4);
+  cout << "5=\t";
+  printIntBinary(5);
+  cout << "8=\t";
+  printIntBinary(8);
+  cout << "16=\t";
+  printIntBinary(16);
+  cout << "32=\t";
+  printIntBinary(32);
+  cout << "1 long =\t";
+  long long a = 1;
+  printIntBinary(a);
+  cout << endl << "----------------- II ----------------" << endl << endl;
 
-  //  char data[] = "AAA BBB CCC";
-  //  cout << data << "=";
-  //  RemoveDups(data);
-  //  cout << data << endl;
-  //  char test[] = "AAA asdasdasdasdasdadsssa BBB CCC";
-  //  cout << test << "=";
-  //  RemoveDups(test);
-  //  cout << test << endl;
+  char data[] = "AAA BBB CCC";
+  cout << data << "=";
+  RemoveDups(data);
+  cout << data << endl;
+  char test1[] = "AAA asdasdasdasdasdadsssa  BBB CCC";
+  cout << test1 << "=";
+  RemoveDups(test1);
+  cout << test1 << endl;
+
+  cout << endl << "----------------- III ----------------" << endl << endl;
+
   FILE* file;
-
   List test = getTestList();
   test.printList();
   file = fopen("debug.dat", "wb");
   test.serialize(file);
   fclose(file);
-  cout << "-----------" << endl;
+  cout << "--------------------------------"
+       << " after serialize:" << endl;
   test.printList();
-  cout << "-----------" << endl;
-
+  cout << "--------------------------------"
+       << " after deserialize:" << endl;
   file = fopen("debug.dat", "rb");
-  test.deserialize(file);
+
+  List test2;
+  test2.deserialize(file);
   fclose(file);
-  test.printList();
+  test2.printList();
 
   return 0;
 }

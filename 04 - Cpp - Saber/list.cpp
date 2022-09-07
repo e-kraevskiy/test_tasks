@@ -5,13 +5,12 @@ void List::serialize(FILE* file) {
 
   int index = 0;
   // Записываем длинну data + data
-  // Меняем prev на узел с индексом в data
   for (ListNode* cur = head_; cur != nullptr; cur = cur->next) {
     int data_size = cur->data.size();
     fwrite(&data_size, sizeof(int), 1, file);
     fwrite(cur->data.c_str(), sizeof(char), data_size, file);
+    // Меняем prev на узел с индексом текущего узла в data
     cur->prev = new ListNode(std::to_string(index));
-
     ++index;
   }
   // Записываем индекс rand узла
@@ -25,13 +24,14 @@ void List::serialize(FILE* file) {
     }
     fwrite(&rand_index, sizeof(int), 1, file);
   }
-  // Восстанавливаем указатели на prev
-  if (head_ != nullptr and head_->prev != nullptr) {
+  // Восстанавливаем prev у головы
+  if (head_ != nullptr) {
     delete head_->prev;
     head_->prev = nullptr;
   }
+  // Восстанавливаем prev у всех остальных
   for (ListNode* cur = head_; cur != nullptr; cur = cur->next) {
-    if (cur->next != nullptr and cur->next->prev != nullptr) {
+    if (cur->next != nullptr) {
       delete cur->next->prev;
       cur->next->prev = cur;
     }
@@ -39,7 +39,7 @@ void List::serialize(FILE* file) {
 }
 
 void List::deserialize(FILE* file) {
-  clearList();
+  clear();
   fread(&count_, sizeof(count_), 1, file);
   std::vector<ListNode*> ptr_vec;
   ptr_vec.reserve(count_);
@@ -91,7 +91,7 @@ void List::printList() {
   }
 }
 
-void List::clearList() {
+void List::clear() {
   ListNode* cur = head_;
   ListNode* tmp = nullptr;
 

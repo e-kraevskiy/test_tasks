@@ -6,22 +6,24 @@
 #include <iostream>
 
 template <typename T>
-std::string intToBinStr(T num) {
-  std::string res;
+void printIntBinary(T num) {
   int shifts_count = sizeof(T) * 8 - 2;
   T mask = static_cast<T>(1);
   mask <<= shifts_count;
-
-  if (num < 0) res.push_back('1');
+  // Знаковый бит
+  if (num < 0)
+    std::cout << '1';
+  else
+    std::cout << '0';
 
   while (mask) {
     if (num & mask)
-      res.push_back('1');
+      std::cout << '1';
     else
-      res.push_back('0');
+      std::cout << '0';
     mask >>= 1;
   }
-  return res;
+  std::cout << std::endl;
 }
 
 #endif  // FIRST_TASK_H
